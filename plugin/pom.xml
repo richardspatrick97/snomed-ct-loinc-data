@@ -13,10 +13,10 @@
 
     <name>plugin</name>
     <url>http://maven.apache.org</url>
-<!--    <modules>-->
-<!--        <module>snomed-ct-loinc-starterdata-maven-plugin</module>-->
+    <modules>
+        <module>snomed-ct-loinc-starterdata-maven-plugin</module>
 <!--        <module>snomed-ct-loinc-transformation-maven-plugin</module>-->
-<!--    </modules>-->
+    </modules>
 
     <dependencies>
         <dependency>
