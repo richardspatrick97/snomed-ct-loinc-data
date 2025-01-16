@@ -51,7 +51,7 @@ public class SnomedctLoincStarterDataMojo extends AbstractMojo
             PrimitiveData.selectControllerByName(controllerName);
             PrimitiveData.start();
 
-            Composer composer = new Composer("Snomed Starter Data Composer");
+            Composer composer = new Composer("Snomed CT Loinc Starter Data Composer");
 
             Session session = composer.open(State.ACTIVE,
                     TinkarTerm.USER,
