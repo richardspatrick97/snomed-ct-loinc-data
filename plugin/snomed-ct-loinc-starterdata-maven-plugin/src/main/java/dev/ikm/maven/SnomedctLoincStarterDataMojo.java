@@ -58,44 +58,44 @@ public class SnomedctLoincStarterDataMojo extends AbstractMojo
                     TinkarTerm.PRIMORDIAL_MODULE,
                     TinkarTerm.PRIMORDIAL_PATH);
 
-            EntityProxy.Concept snomedAuthor = EntityProxy.Concept.make("IHTSDO SNOMED CT Author", UuidT5Generator.get(namespace, "IHTSDO SNOMED CT Author"));
+            EntityProxy.Concept snomedLoincAuthor = EntityProxy.Concept.make("SNOMED CT LOINC Collaboration Author", UuidT5Generator.get(namespace, "SNOMED CT LOINC Collaboration Author"));
             session.compose((ConceptAssembler concept) -> concept
-                    .concept(snomedAuthor)
+                    .concept(snomedLoincAuthor)
                     .attach((FullyQualifiedName fqn) -> fqn
                             .language(ENGLISH_LANGUAGE)
-                            .text("IHTSDO SNOMED CT Author")
+                            .text("IHTSDO SNOMED CT LOINC Collaboration Author")
                             .caseSignificance(DESCRIPTION_NOT_CASE_SENSITIVE)
                     )
                     .attach((Synonym synonym)-> synonym
                             .language(ENGLISH_LANGUAGE)
-                            .text("SNOMED CT Author")
+                            .text("SNOMED CT LOINC Collaboration Author")
                             .caseSignificance(DESCRIPTION_NOT_CASE_SENSITIVE)
                     )
                     .attach((Definition definition) -> definition
                             .language(ENGLISH_LANGUAGE)
-                            .text("International Health Terminology Standards Development Organisation (IHTSDO) SNOMED CT Author")
+                            .text("International Health Terminology Standards Development Organisation (IHTSDO) SNOMED CT LOINC Collaboration Author")
                             .caseSignificance(DESCRIPTION_NOT_CASE_SENSITIVE)
                     )
                     .attach((Identifier identifier) -> identifier
                             .source(TinkarTerm.UNIVERSALLY_UNIQUE_IDENTIFIER)
-                            .identifier(snomedAuthor.asUuidArray()[0].toString())
+                            .identifier(snomedLoincAuthor.asUuidArray()[0].toString())
                     )
                     .attach((StatedAxiom statedAxiom) -> statedAxiom
                             .isA(TinkarTerm.USER)
                     )
             );
 
-            EntityProxy.Concept snomedIdentifier = EntityProxy.Concept.make("SNOMED CT Identifier",  UuidT5Generator.get(namespace,"900000000000294009"));
+            EntityProxy.Concept loincIdentifier = EntityProxy.Concept.make("LOINC Number",  UuidT5Generator.get(namespace,"705114005"));
             session.compose((ConceptAssembler concept) -> concept
-                    .concept(snomedIdentifier)
+                    .concept(loincIdentifier)
                     .attach((FullyQualifiedName fqn) -> fqn
                             .language(ENGLISH_LANGUAGE)
-                            .text("SNOMED CT Identifier")
+                            .text("LOINC Number")
                             .caseSignificance(DESCRIPTION_NOT_CASE_SENSITIVE)
                     )
                     .attach((Synonym synonym)-> synonym
                             .language(ENGLISH_LANGUAGE)
-                            .text("SCTID")
+                            .text("LOINC Num")
                             .caseSignificance(DESCRIPTION_NOT_CASE_SENSITIVE)
                     )
                     .attach((Definition definition) -> definition
@@ -105,7 +105,7 @@ public class SnomedctLoincStarterDataMojo extends AbstractMojo
                     )
                     .attach((Identifier identifier) -> identifier
                             .source(TinkarTerm.UNIVERSALLY_UNIQUE_IDENTIFIER)
-                            .identifier(snomedIdentifier.asUuidArray()[0].toString())
+                            .identifier(loincIdentifier.asUuidArray()[0].toString())
                     )
                     .attach((StatedAxiom statedAxiom) -> statedAxiom
                             .isA(TinkarTerm.IDENTIFIER_SOURCE)
