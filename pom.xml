@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>dev.ikm.maven</groupId>
+    <groupId>dev.ikm.snomedctloinc</groupId>
     <artifactId>snomed-ct-loinc-data</artifactId>
     <version>US_PRODUCTION_US1000124_20240901T120000Z-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -18,7 +18,7 @@
     <name>SNOMED CT Loinc Data</name>
 
     <modules>
-        <module>plugin</module>
+        <module>snomed-ct-loinc-plugin</module>
 <!--        <module>snomed-ct-loinc-origin</module>-->
 <!--        <module>snomed-ct-loinc-starterdata</module>-->
 <!--        <module>snomed-ct-loinc-binding</module>-->
