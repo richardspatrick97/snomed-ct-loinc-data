@@ -8,15 +8,15 @@
     </parent>
 
     <groupId>dev.ikm.maven</groupId>
-    <artifactId>plugin</artifactId>
+    <artifactId>snomed-ct-loinc-plugin</artifactId>
     <packaging>pom</packaging>
 
-    <name>plugin</name>
+    <name>snomed-ct-loinc-plugin</name>
     <url>http://maven.apache.org</url>
-<!--    <modules>-->
-<!--        <module>snomed-ct-loinc-starterdata-maven-plugin</module>-->
+    <modules>
+        <module>snomed-ct-loinc-starterdata-maven-plugin</module>
 <!--        <module>snomed-ct-loinc-transformation-maven-plugin</module>-->
-<!--    </modules>-->
+    </modules>
 
     <dependencies>
         <dependency>
