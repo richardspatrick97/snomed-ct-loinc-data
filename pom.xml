@@ -18,8 +18,8 @@
     <name>SNOMED CT Loinc Data</name>
 
     <modules>
-        <module>snomed-ct-loinc-plugin</module>
-<!--        <module>snomed-ct-loinc-origin</module>-->
+        <module>plugin</module>
+        <!--        <module>snomed-ct-loinc-origin</module>-->
 <!--        <module>snomed-ct-loinc-starterdata</module>-->
 <!--        <module>snomed-ct-loinc-binding</module>-->
 <!--        <module>snomed-ct-loinc-pipeline</module>-->
