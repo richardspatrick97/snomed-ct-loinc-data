@@ -70,11 +70,6 @@ public class DefinitionTransformer extends AbstractTransformer {
     public void transform(File definitionFile, Composer composer) {
         Concept author = SnomedLoincUtility.getUserConcept();
         Concept path = SnomedLoincUtility.getPathConcept();
-        composeEntityList(definitionFile, author, path, composer);
-    }
-
-
-    public void composeEntityList(File definitionFile, Concept author, Concept path, Composer composer) {
         try (Stream<String> lines = Files.lines(definitionFile.toPath())) {
             lines.skip(1) //skip first line, i.e. header line
                     .map(row -> row.split("\t"))
@@ -85,7 +80,7 @@ public class DefinitionTransformer extends AbstractTransformer {
                         Session session = composer.open(status, epochTime, author, moduleConcept, path);
 
                         Concept referencedConcept = previousReferencedConcept;
-                        EntityProxy.Semantic definitionSemantic = previousDefinitionSemantic;
+                        EntityProxy.Semantic definitionSemantic;
 
                         if (!data[ID].equals(previousRowId)) {
                             referencedConcept = Concept.make(PublicIds.of(UuidUtil.fromSNOMED(data[CONCEPT_ID])));
@@ -96,36 +91,27 @@ public class DefinitionTransformer extends AbstractTransformer {
                             previousRowId = data[ID];
                             previousReferencedConcept = referencedConcept;
                             previousDefinitionSemantic = definitionSemantic;
+                        } else {
+                            definitionSemantic = previousDefinitionSemantic;
                         }
-                        composeDescriptionSemanticVersion(definitionSemantic, session, data);
+
+                        Concept languageConcept = SnomedLoincUtility.getLanguageConcept(data[LANGUAGE_CODE]);
+                        Concept caseSignificanceConcept = SnomedLoincUtility.getDescriptionCaseSignificanceConcept(data[CASE_SIGNIFICANCE_ID]);
+                        Concept descriptionTypeConcept = SnomedLoincUtility.getDescriptionType(data[TYPE_ID]);
+
+                        session.compose((SemanticAssembler semanticAssembler) -> semanticAssembler
+                                .semantic(definitionSemantic)
+                                .pattern(TinkarTerm.DESCRIPTION_PATTERN)
+                                .reference(previousReferencedConcept)
+                                .fieldValues(fieldValues -> fieldValues
+                                        .with(languageConcept)
+                                        .with(data[TERM])
+                                        .with(caseSignificanceConcept)
+                                        .with(descriptionTypeConcept)
+                                ));
                     });
         } catch (IOException | SecurityException ex) {
             LOG.info(ex.toString());
         }
-    }
-
-        /**
-         * Creates description semantic version
-         *
-         * @param definitionSemantic Definition semantic
-         * @param session The currently opened session from composer
-         * @param data row from Definition file split on tabs
-         * @return Semantic Version {@link Entity}
-         */
-    private static void composeDescriptionSemanticVersion(EntityProxy.Semantic definitionSemantic, Session session, String[] data) {
-        Concept languageConcept = SnomedLoincUtility.getLanguageConcept(data[LANGUAGE_CODE]);
-        Concept caseSignificanceConcept = SnomedLoincUtility.getDescriptionCaseSignificanceConcept(data[CASE_SIGNIFICANCE_ID]);
-        Concept descriptionTypeConcept = SnomedLoincUtility.getDescriptionType(data[TYPE_ID]);
-
-        session.compose((SemanticAssembler semanticAssembler) -> semanticAssembler
-                .semantic(definitionSemantic)
-                .pattern(TinkarTerm.DESCRIPTION_PATTERN)
-                .reference(previousReferencedConcept)
-                .fieldValues(fieldValues -> fieldValues
-                        .with(languageConcept)
-                        .with(data[TERM])
-                        .with(caseSignificanceConcept)
-                        .with(descriptionTypeConcept)
-                ));
     }
 }

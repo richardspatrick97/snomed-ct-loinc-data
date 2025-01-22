@@ -60,31 +60,6 @@ public class SnomedLoincUtility {
         this.STAMP_UTILITY = new STAMPUtility(uuidUtility);
     }
 
-    /**
-     * creating a stamp
-     * @param status String that represents active or inactive
-     * @param effectiveTime String that represents dates in yyyyMMdd format
-     * @param authorConcept {@link Concept}
-     * @param moduleId String to represent a module
-     * @param pathConcept {@link Concept}
-     * @return new stamp entity
-     */
-    public Entity<? extends EntityVersion> composeSTAMP(String status, String effectiveTime, Concept authorConcept, String moduleId, Concept pathConcept) {
-        Concept statusConcept = status.equals("1") ? TinkarTerm.ACTIVE_STATE : TinkarTerm.INACTIVE_STATE;
-        long epochTime = snomedTimestampToEpochSeconds(effectiveTime);
-        Concept moduleConcept = Concept.make(PublicIds.of(UuidUtil.fromSNOMED(moduleId)));
-        Entity<? extends EntityVersion> newStampEntity = STAMP_UTILITY.createSTAMP(statusConcept, epochTime, authorConcept, moduleConcept, pathConcept);
-        this.STAMP_LIST.add(newStampEntity);
-        return newStampEntity;
-    }
-
-    /**
-     * writes stamps
-     */
-    public void writeSTAMPs() {
-        Set<Entity<? extends EntityVersion>> stampSet = new HashSet<>(this.STAMP_LIST);
-        stampSet.forEach(stampEntity -> EntityService.get().putEntity(stampEntity));
-    }
 
     /**
      * taking time stamp and making it an epoch
@@ -185,7 +160,6 @@ public class SnomedLoincUtility {
         public static Concept getUserConcept(){
             Concept snomedLoincAuthor = Concept.make("SNOMED CT LOINC Collaboration Author", new UUIDUtility().createUUID("SNOMED CT LOINC Collaboration Author"));
             return snomedLoincAuthor;
-//        return TinkarTerm.USER;
     }
 
     /**
@@ -219,27 +193,6 @@ public class SnomedLoincUtility {
         PrimitiveData.start();
     }
 
-    public static void stopDatabase() {
-        PrimitiveData.stop();
-    }
-
-    public static void exportEntities(File exportFile) {
-        ExportEntitiesController exportEntitiesController = new ExportEntitiesController();
-        FileUtil.recursiveDelete(exportFile);
-        try {
-            exportEntitiesController.export(exportFile).get();
-        } catch (ExecutionException | InterruptedException ex){
-            ex.printStackTrace();
-        }
-    }
-
-    public List<Entity<? extends EntityVersion>> getStampList() {
-        return this.STAMP_LIST;
-    }
-
-    public Set<Entity<? extends EntityVersion>> getStampSet() {
-        return new HashSet<>(this.STAMP_LIST);
-    }
 
     private static Pattern getIdPattern() {
         // Expecting a Snomed OR Loinc identifier following a colon as shown below

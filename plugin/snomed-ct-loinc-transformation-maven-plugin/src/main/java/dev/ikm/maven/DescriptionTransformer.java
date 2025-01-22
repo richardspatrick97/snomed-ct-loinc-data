@@ -51,10 +51,10 @@ public class DescriptionTransformer extends AbstractTransformer {
         super(namespace);
     }
 
-
     /**
      * This method uses a description file and transforms it into a list of entities
      * @param descriptionFile
+     * @param composer
      * @Returns void
      */
     public void transform(File descriptionFile, Composer composer){
@@ -70,42 +70,30 @@ public class DescriptionTransformer extends AbstractTransformer {
                     long time = SnomedLoincUtility.snomedTimestampToEpochSeconds(data[EFFECTIVE_TIME]);
                     EntityProxy.Concept moduleId = EntityProxy.Concept.make(PublicIds.of(UuidUtil.fromSNOMED(data[MODULE_ID])));
                     Session session = composer.open(status, time, author, moduleId, path);
-                    configureSemantics(session, data);
+                    EntityProxy.Semantic descriptionSemantic = EntityProxy.Semantic.make(PublicIds.of(UuidUtil.fromSNOMED(data[ID])));
+
+                    EntityProxy.Concept descriptionType = SnomedLoincUtility.getDescriptionType(data[TYPE_ID]);
+                    EntityProxy.Concept languageType = SnomedLoincUtility.getLanguageConcept(data[LANGUAGE_CODE]);
+                    EntityProxy.Concept caseSensitivityConcept = SnomedLoincUtility.getDescriptionCaseSignificanceConcept(data[CASE_SIGNIFICANCE]);
+
+                    PublicId publicId = PublicIds.of(UuidUtil.fromSNOMED(data[CONCEPT_ID]));
+                    EntityProxy.Concept concept = EntityProxy.Concept.make(publicId);
+
+                    previousRowId = data[ID];
+
+                    session.compose((SemanticAssembler semanticAssembler) -> semanticAssembler
+                            .semantic(descriptionSemantic)
+                            .pattern(TinkarTerm.DESCRIPTION_PATTERN)
+                            .reference(concept)
+                            .fieldValues(fieldValues -> fieldValues
+                                    .with(languageType)
+                                    .with(data[TERM])
+                                    .with(caseSensitivityConcept)
+                                    .with(descriptionType)
+                            ));
                 });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-    /**
-     * Uses an instance of Databuilder and String array and transforms it into a
-     * semantic and adds it into a semanticentity list inside databuilder
-     * @param session
-     * @param data
-     * @Returns void
-     */
-    private void configureSemantics(Session session, String[] data) {
-        EntityProxy.Semantic descriptionSemantic = EntityProxy.Semantic.make(PublicIds.of(UuidUtil.fromSNOMED(data[ID])));
-
-        EntityProxy.Concept descriptionType = SnomedLoincUtility.getDescriptionType(data[TYPE_ID]);
-        EntityProxy.Concept languageType = SnomedLoincUtility.getLanguageConcept(data[LANGUAGE_CODE]);
-        EntityProxy.Concept caseSensitivityConcept = SnomedLoincUtility.getDescriptionCaseSignificanceConcept(data[CASE_SIGNIFICANCE]);
-
-        PublicId publicId = PublicIds.of(UuidUtil.fromSNOMED(data[CONCEPT_ID]));
-        EntityProxy.Concept concept = EntityProxy.Concept.make(publicId);
-
-        previousRowId = data[ID];
-
-        session.compose((SemanticAssembler semanticAssembler) -> semanticAssembler
-                .semantic(descriptionSemantic)
-                .pattern(TinkarTerm.DESCRIPTION_PATTERN)
-                .reference(concept)
-                .fieldValues(fieldValues -> fieldValues
-                        .with(languageType)
-                        .with(data[TERM])
-                        .with(caseSensitivityConcept)
-                        .with(descriptionType)
-                ));
-    }
-
 }
