@@ -15,7 +15,8 @@
     <url>http://maven.apache.org</url>
 
     <build>
-        <plugins>
+        <pluginManagement>
+            <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
@@ -36,5 +37,6 @@
                 </executions>
             </plugin>
         </plugins>
+     </pluginManagement>
     </build>
 </project>
