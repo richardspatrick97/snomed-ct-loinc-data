@@ -15,30 +15,18 @@
  */
 package dev.ikm.maven;
 
-import dev.ikm.snomedct.databuilder.STAMPUtility;
-import dev.ikm.snomedct.databuilder.UUIDUtility;
 import dev.ikm.tinkar.common.id.PublicIds;
-import dev.ikm.tinkar.common.service.CachingService;
-import dev.ikm.tinkar.common.service.PrimitiveData;
-import dev.ikm.tinkar.common.service.ServiceKeys;
-import dev.ikm.tinkar.common.service.ServiceProperties;
-import dev.ikm.tinkar.common.util.io.FileUtil;
+import dev.ikm.tinkar.common.util.uuid.UuidT5Generator;
 import dev.ikm.tinkar.common.util.uuid.UuidUtil;
-import dev.ikm.tinkar.entity.Entity;
-import dev.ikm.tinkar.entity.EntityService;
-import dev.ikm.tinkar.entity.EntityVersion;
-import dev.ikm.tinkar.entity.export.ExportEntitiesController;
 import dev.ikm.tinkar.terms.EntityProxy;
 import dev.ikm.tinkar.terms.EntityProxy.Concept;
 import dev.ikm.tinkar.terms.TinkarTerm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,18 +35,6 @@ import java.util.regex.Pattern;
 public class SnomedLoincUtility {
 
     private static final Logger LOG = LoggerFactory.getLogger(SnomedLoincUtility .class.getSimpleName());
-    private final UUIDUtility UUID_UTILITY;
-    private final STAMPUtility STAMP_UTILITY;
-    private final List<Entity<? extends EntityVersion>> STAMP_LIST = new ArrayList<>();
-
-    /**
-     * constructor for SnomedUtility
-     * @param uuidUtility used to create uuid's
-     */
-    public SnomedLoincUtility(UUIDUtility uuidUtility) {
-        this.UUID_UTILITY = uuidUtility;
-        this.STAMP_UTILITY = new STAMPUtility(uuidUtility);
-    }
 
 
     /**
@@ -157,8 +133,8 @@ public class SnomedLoincUtility {
      * retrieves user concept
      * @return the snomed author
      */
-        public static Concept getUserConcept(){
-            Concept snomedLoincAuthor = Concept.make("SNOMED CT LOINC Collaboration Author", new UUIDUtility().createUUID("SNOMED CT LOINC Collaboration Author"));
+        public static Concept getUserConcept(UUID namespace){
+            Concept snomedLoincAuthor = Concept.make("SNOMED CT LOINC Collaboration Author", UuidT5Generator.get(namespace,"SNOMED CT LOINC Collaboration Author"));
             return snomedLoincAuthor;
     }
 
@@ -182,15 +158,6 @@ public class SnomedLoincUtility {
     public static Concept getSnomedLoincIdentifierConcept(){
         Concept snomedIntID = Concept.make(PublicIds.of(UuidUtil.fromSNOMED("11010000107")));
         return snomedIntID;
-    }
-
-    public static void startDatabase(File dataStore, String controllerName) {
-        LOG.info("Starting database");
-        LOG.info("Loading data from " + dataStore.getAbsolutePath());
-        CachingService.clearAll();
-        ServiceProperties.set(ServiceKeys.DATA_STORE_ROOT, dataStore);
-        PrimitiveData.selectControllerByName(controllerName);
-        PrimitiveData.start();
     }
 
 

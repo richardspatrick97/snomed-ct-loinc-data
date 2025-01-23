@@ -59,7 +59,7 @@ public class DescriptionTransformer extends AbstractTransformer {
      */
     public void transform(File descriptionFile, Composer composer){
 
-        EntityProxy.Concept author = SnomedLoincUtility.getUserConcept();
+        EntityProxy.Concept author = SnomedLoincUtility.getUserConcept(namespace);
         EntityProxy.Concept path = SnomedLoincUtility.getPathConcept();
 
         try (Stream<String> lines = Files.lines(descriptionFile.toPath())) {

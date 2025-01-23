@@ -68,7 +68,7 @@ public class DefinitionTransformer extends AbstractTransformer {
      */
     @Override
     public void transform(File definitionFile, Composer composer) {
-        Concept author = SnomedLoincUtility.getUserConcept();
+        Concept author = SnomedLoincUtility.getUserConcept(namespace);
         Concept path = SnomedLoincUtility.getPathConcept();
         try (Stream<String> lines = Files.lines(definitionFile.toPath())) {
             lines.skip(1) //skip first line, i.e. header line

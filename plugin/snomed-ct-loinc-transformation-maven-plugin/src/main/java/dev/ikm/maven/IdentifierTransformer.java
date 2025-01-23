@@ -54,7 +54,7 @@ public class IdentifierTransformer extends AbstractTransformer {
      */
     @Override
     public void transform(File inputFile, Composer composer){
-        EntityProxy.Concept author = SnomedLoincUtility.getUserConcept();
+        EntityProxy.Concept author = SnomedLoincUtility.getUserConcept(namespace);
         EntityProxy.Concept path = SnomedLoincUtility.getPathConcept();
 
         try (Stream<String> lines = Files.lines(inputFile.toPath())) {

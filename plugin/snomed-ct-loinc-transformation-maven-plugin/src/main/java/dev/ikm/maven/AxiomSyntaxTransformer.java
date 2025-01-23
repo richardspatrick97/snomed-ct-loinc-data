@@ -59,7 +59,7 @@ public class AxiomSyntaxTransformer extends AbstractTransformer {
     @Override
     public void transform(File axiomFile, Composer composer) {
 
-        EntityProxy.Concept author = SnomedLoincUtility.getUserConcept();
+        EntityProxy.Concept author = SnomedLoincUtility.getUserConcept(namespace);
         EntityProxy.Concept path = SnomedLoincUtility.getPathConcept();
 
         try (Stream<String> lines = Files.lines(axiomFile.toPath())) {
