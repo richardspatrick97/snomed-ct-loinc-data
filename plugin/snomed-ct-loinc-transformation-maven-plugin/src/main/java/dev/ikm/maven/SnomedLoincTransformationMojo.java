@@ -93,7 +93,31 @@ public class SnomedLoincTransformationMojo extends AbstractMojo {
                 zis.closeEntry();
             }
         }
-        return outputDirectory.getAbsolutePath();
+        File dataFolder = searchDataFolder(outputDirectory);
+
+        if (dataFolder != null) {
+            return dataFolder.getAbsolutePath();
+        } else {
+            throw new FileNotFoundException("The data folder could not be found...");
+        }
+    }
+
+    private File searchDataFolder(File dir) {
+        if (dir.isDirectory()){
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if(file.getParentFile().getName().equals("src")) {
+                        return file;
+                    }
+                    File found = searchDataFolder(file);
+                    if (found != null) {
+                        return found;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private void validateInputDirectory(File inputFileOrDirectory) throws MojoExecutionException {
