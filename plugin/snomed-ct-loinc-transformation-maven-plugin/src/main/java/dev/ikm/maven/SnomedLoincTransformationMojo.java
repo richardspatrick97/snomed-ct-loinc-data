@@ -39,7 +39,7 @@ import java.util.zip.ZipInputStream;
 /**
  * Class for transforming all snomed files in a directory
  */
-@Mojo(name = "run-snomed-transformation", defaultPhase = LifecyclePhase.INSTALL)
+@Mojo(name = "run-snomed-loinc-transformation", defaultPhase = LifecyclePhase.INSTALL)
 public class SnomedLoincTransformationMojo extends AbstractMojo {
     private static final Logger LOG = LoggerFactory.getLogger(SnomedLoincTransformationMojo.class.getSimpleName());
 
