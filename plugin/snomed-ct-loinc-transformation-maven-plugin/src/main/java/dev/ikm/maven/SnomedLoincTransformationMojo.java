@@ -93,32 +93,7 @@ public class SnomedLoincTransformationMojo extends AbstractMojo {
                 zis.closeEntry();
             }
         }
-        File terminologyFolder = searchTerminologyFolder(outputDirectory);
-
-        if (terminologyFolder != null) {
-            return terminologyFolder.getAbsolutePath();
-        } else {
-            throw new FileNotFoundException("The 'Terminology' folder could not be found...");
-        }
-    }
-
-    private static File searchTerminologyFolder(File dir) {
-        if (dir.isDirectory()){
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if(file.isDirectory() && file.getName().equals("Terminology") &&
-                            file.getParentFile().getName().equals("Full")) {
-                        return file;
-                    }
-                    File found = searchTerminologyFolder(file);
-                    if (found != null) {
-                        return found;
-                    }
-                }
-            }
-        }
-        return null;
+        return outputDirectory.getAbsolutePath();
     }
 
     private void validateInputDirectory(File inputFileOrDirectory) throws MojoExecutionException {
