@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>dev.ikm.maven</groupId>
-        <artifactId>snomed-ct-loinc-plugin</artifactId>
+        <groupId>dev.ikm.snomedctloinc</groupId>
+        <artifactId>plugin</artifactId>
         <version>US_PRODUCTION_US1000124_20240901T120000Z-SNAPSHOT</version>
     </parent>
 
@@ -15,7 +15,8 @@
     <url>http://maven.apache.org</url>
 
     <build>
-        <plugins>
+        <pluginManagement>
+            <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
@@ -36,5 +37,6 @@
                 </executions>
             </plugin>
         </plugins>
+     </pluginManagement>
     </build>
 </project>

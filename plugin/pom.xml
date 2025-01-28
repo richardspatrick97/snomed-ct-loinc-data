@@ -7,15 +7,14 @@
         <version>US_PRODUCTION_US1000124_20240901T120000Z-SNAPSHOT</version>
     </parent>
 
-    <groupId>dev.ikm.maven</groupId>
-    <artifactId>snomed-ct-loinc-plugin</artifactId>
+    <artifactId>plugin</artifactId>
     <packaging>pom</packaging>
 
-    <name>snomed-ct-loinc-plugin</name>
+    <name>plugin</name>
     <url>http://maven.apache.org</url>
     <modules>
         <module>snomed-ct-loinc-starterdata-maven-plugin</module>
-<!--        <module>snomed-ct-loinc-transformation-maven-plugin</module>-->
+        <module>snomed-ct-loinc-transformation-maven-plugin</module>
     </modules>
 
     <dependencies>
