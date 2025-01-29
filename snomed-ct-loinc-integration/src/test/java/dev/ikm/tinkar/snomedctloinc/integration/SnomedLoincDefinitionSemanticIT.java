@@ -22,7 +22,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoincDefinitionSemanticIT extends AbstractLoincIntegrationTest {
+public class SnomedLoincDefinitionSemanticIT extends SnomedLoincAbstractIntegrationTest {
 
     /**
      * Test Loinc Definition Semantics.

@@ -3,5 +3,5 @@ package dev.ikm.tinkar.snomedctloinc.integration;
 /**
  *
  */
-public class LoincAxiomSemanticIT {
+public class SnomedLoincDescriptionSemanticIT {
 }

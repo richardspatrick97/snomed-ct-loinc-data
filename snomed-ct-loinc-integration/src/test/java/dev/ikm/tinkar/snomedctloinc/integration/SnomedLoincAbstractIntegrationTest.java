@@ -22,8 +22,8 @@ import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public abstract class AbstractLoincIntegrationTest {
-    Logger log = LoggerFactory.getLogger(AbstractLoincIntegrationTest.class);
+public abstract class SnomedLoincAbstractIntegrationTest {
+    Logger log = LoggerFactory.getLogger(SnomedLoincAbstractIntegrationTest.class);
 
     @AfterAll
     public static void shutdown() {
