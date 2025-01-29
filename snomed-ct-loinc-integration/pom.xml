@@ -12,11 +12,11 @@
     <artifactId>snomed-ct-loinc-integration</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+<!--    <properties>-->
+<!--        <maven.compiler.source>21</maven.compiler.source>-->
+<!--        <maven.compiler.target>21</maven.compiler.target>-->
+<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+<!--    </properties>-->
 
     <name>snomed-ct-loinc-integration</name>
     <url>http://maven.apache.org</url>
@@ -85,6 +85,7 @@
                     <systemPropertyVariables>
                         <datastorePath>${user.home}/Solor/generated-data</datastorePath>
                     </systemPropertyVariables>
+<!--                    <skipITs>true</skipITs>-->
                 </configuration>
                 <executions>
                     <execution>
