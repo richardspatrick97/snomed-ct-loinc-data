@@ -22,8 +22,8 @@ import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public abstract class SnomedLoincAbstractIntegrationTest {
-    Logger log = LoggerFactory.getLogger(SnomedLoincAbstractIntegrationTest.class);
+public abstract class AbstractIntegrationTest {
+    Logger log = LoggerFactory.getLogger(AbstractIntegrationTest.class);
 
     @AfterAll
     public static void shutdown() {
@@ -91,6 +91,35 @@ public abstract class SnomedLoincAbstractIntegrationTest {
         }
         log.info("We found file: " + sourceFilePath);
         return notFound;
+    }
+
+    protected String findFilePath(String baseDir, String datasetType, String fileKeyword) throws IOException {
+        String dirKeyword;
+
+        if (datasetType.equalsIgnoreCase("International") || datasetType.equalsIgnoreCase("int") || datasetType.equalsIgnoreCase("InternationalRF2")) {
+            dirKeyword = "InternationalRF2";
+        } else if (datasetType.equalsIgnoreCase("us") || datasetType.equalsIgnoreCase("ManagedServiceUS")) {
+            dirKeyword = "ManagedServiceUS";
+        } else {
+            dirKeyword = "";
+        }
+
+        try (Stream<Path> dirStream = Files.walk(Paths.get(baseDir))) {
+            Path targetDir = dirStream.filter(Files::isDirectory)
+                    .filter(path -> path.toFile().getAbsoluteFile().toString().toLowerCase().contains(dirKeyword.toLowerCase()))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Target DIRECTORY not found for: " + dirKeyword));
+
+            try (Stream<Path> fileStream = Files.walk(targetDir)) {
+                Path targetFile = fileStream.filter(Files::isRegularFile)
+                        .filter(path -> path.toFile().getAbsoluteFile().toString().toLowerCase().contains(fileKeyword.toLowerCase()))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Target FILE not found for: " + fileKeyword));
+
+                return targetFile.toAbsolutePath().toString();
+            }
+        }
+
     }
 
     protected UUID uuid(String id) {
