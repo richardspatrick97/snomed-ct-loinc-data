@@ -25,9 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SnomedLoincDefinitionSemanticIT extends AbstractIntegrationTest {
 
     /**
-     * Test Loinc Definition Semantics.
+     * Test Snomed Loinc Definition Semantics.
      *
-     * @result Reads content from file and validates Definition of Semantics by calling private method assertDefinition().
+     * @result Reads content from file and validates Definition of Semantics by calling protected method assertLine().
      */
     @Test
     public void testDefinitionSemantics() throws IOException {
