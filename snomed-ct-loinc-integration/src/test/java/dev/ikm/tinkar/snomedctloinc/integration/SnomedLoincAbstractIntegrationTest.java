@@ -22,8 +22,8 @@ import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public abstract class AbstractIntegrationTest {
-    Logger log = LoggerFactory.getLogger(AbstractIntegrationTest.class);
+public abstract class SnomedLoincAbstractIntegrationTest {
+    Logger log = LoggerFactory.getLogger(SnomedLoincAbstractIntegrationTest.class);
 
     @AfterAll
     public static void shutdown() {
@@ -86,6 +86,7 @@ public abstract class AbstractIntegrationTest {
                 if (!assertLine(line.split("\\t"))) {
                     notFound++;
                     bw.write(line);
+                    bw.newLine();
                 }
             }
         }
