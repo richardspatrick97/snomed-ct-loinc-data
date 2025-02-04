@@ -94,35 +94,6 @@ public abstract class SnomedLoincAbstractIntegrationTest {
         return notFound;
     }
 
-    protected String findFilePath(String baseDir, String datasetType, String fileKeyword) throws IOException {
-        String dirKeyword;
-
-        if (datasetType.equalsIgnoreCase("International") || datasetType.equalsIgnoreCase("int") || datasetType.equalsIgnoreCase("InternationalRF2")) {
-            dirKeyword = "InternationalRF2";
-        } else if (datasetType.equalsIgnoreCase("us") || datasetType.equalsIgnoreCase("ManagedServiceUS")) {
-            dirKeyword = "ManagedServiceUS";
-        } else {
-            dirKeyword = "";
-        }
-
-        try (Stream<Path> dirStream = Files.walk(Paths.get(baseDir))) {
-            Path targetDir = dirStream.filter(Files::isDirectory)
-                    .filter(path -> path.toFile().getAbsoluteFile().toString().toLowerCase().contains(dirKeyword.toLowerCase()))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Target DIRECTORY not found for: " + dirKeyword));
-
-            try (Stream<Path> fileStream = Files.walk(targetDir)) {
-                Path targetFile = fileStream.filter(Files::isRegularFile)
-                        .filter(path -> path.toFile().getAbsoluteFile().toString().toLowerCase().contains(fileKeyword.toLowerCase()))
-                        .findFirst()
-                        .orElseThrow(() -> new RuntimeException("Target FILE not found for: " + fileKeyword));
-
-                return targetFile.toAbsolutePath().toString();
-            }
-        }
-
-    }
-
     protected UUID uuid(String id) {
         return UuidUtil.fromSNOMED(id);
 //        return UuidT5Generator.get(UUID.fromString("3094dbd1-60cf-44a6-92e3-0bb32ca4d3de"), id);
