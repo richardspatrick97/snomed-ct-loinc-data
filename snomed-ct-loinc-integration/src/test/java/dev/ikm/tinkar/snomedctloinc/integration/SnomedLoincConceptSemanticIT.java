@@ -17,14 +17,11 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- *
- */
 public class SnomedLoincConceptSemanticIT extends SnomedLoincAbstractIntegrationTest {
     /**
-     * Test Concepts Semantics.
+     * Test Snomed Loinc Concepts Semantics.
      *
-     * @result Reads content from file and validates Concept of Semantics by calling private method assertConcept().
+     * @result Reads content from file and validates Concept of Semantics by calling protected method assertLine().
      */
     @Test
     public void testConceptSemantics() throws IOException {

@@ -86,7 +86,6 @@ public abstract class SnomedLoincAbstractIntegrationTest {
                 if (!assertLine(line.split("\\t"))) {
                     notFound++;
                     bw.write(line);
-                    bw.newLine();
                 }
             }
         }
