@@ -93,7 +93,7 @@ public class SnomedLoincTransformationMojo extends AbstractMojo {
                 zis.closeEntry();
             }
         }
-        File dataFolder = searchDataFolder(outputDirectory);
+        File dataFolder = searchTerminologyFolder(outputDirectory);
 
         if (dataFolder != null) {
             return dataFolder.getAbsolutePath();
@@ -102,15 +102,16 @@ public class SnomedLoincTransformationMojo extends AbstractMojo {
         }
     }
 
-    private File searchDataFolder(File dir) {
+    private File searchTerminologyFolder(File dir) {
         if (dir.isDirectory()){
             File[] files = dir.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if(file.getParentFile().getName().equals("src")) {
+                    if(file.isDirectory() && file.getName().equals("Terminology") &&
+                            file.getParentFile().getName().equals("Full")) {
                         return file;
                     }
-                    File found = searchDataFolder(file);
+                    File found = searchTerminologyFolder(file);
                     if (found != null) {
                         return found;
                     }

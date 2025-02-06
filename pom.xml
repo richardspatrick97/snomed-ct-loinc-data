@@ -23,8 +23,6 @@
         <module>snomed-ct-loinc-starterdata</module>
         <module>snomed-ct-loinc-binding</module>
         <module>snomed-ct-loinc-pipeline</module>
-        <module>snomed-ct-loinc-owl-transform</module>
-        <module>snomed-ct-loinc-reasoner</module>
         <module>snomed-ct-loinc-integration</module>
     </modules>
 
@@ -37,7 +35,7 @@
 
         <!-- origin -->
         <origin.working.directory>${project.build.directory}/origin-sources</origin.working.directory>
-        <source.zip>snomedloinc-data-international.zip</source.zip>
+        <source.zip>xSnomedCT_LOINCExtension_ALPHA_LO1010000_20231015T120000Z.zip</source.zip>
     </properties>
     <dependencyManagement>
         <dependencies>
