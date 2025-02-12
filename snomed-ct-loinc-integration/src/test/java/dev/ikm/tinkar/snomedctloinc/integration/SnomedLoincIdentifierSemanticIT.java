@@ -36,7 +36,7 @@ public class SnomedLoincIdentifierSemanticIT extends SnomedLoincAbstractIntegrat
      * @result Reads content from file and validates Identifier of Semantics by calling protected method assertLine().
      */
     @Test
-    public void testIdentifierSemantics() throws IOException {
+    public void testIdentifierSemantics() throws IOException {git 
         String sourceFilePath = "../snomed-ct-loinc-origin/target/origin-sources";
         String errorFile = "target/failsafe-reports/identifiers_not_found.txt";
 
@@ -48,25 +48,15 @@ public class SnomedLoincIdentifierSemanticIT extends SnomedLoincAbstractIntegrat
 
     @Override
     protected boolean assertLine(String[] columns) {
-//        String alternateIdentifier = columns[0]; //It comes as a String! ////NOT a UUID!
         long effectiveDate = SnomedLoincUtility.snomedTimestampToEpochSeconds(columns[1]);
         StateSet active = Integer.parseInt(columns[2]) == 1 ? StateSet.ACTIVE : StateSet.INACTIVE;
-//        String moduleId = columns[3]; //Not used!
-//        UUID identifierSchemeId = uuid(columns[4]); //It is NOT a UUID? //Not used!
         String referencedComponentId = columns[5];
         UUID uuid = UuidUtil.fromSNOMED(referencedComponentId);
-//        PublicId publicId = PublicIds.of(uuid); //Not needed!
 
         StampPositionRecord stampPosition = StampPositionRecord.make(effectiveDate, TinkarTerm.DEVELOPMENT_PATH.nid());
         StampCalculator stampCalc = StampCoordinateRecord.make(active, stampPosition).stampCalculator();
         ConceptRecord entity = EntityService.get().getEntityFast(uuid);
         Latest<EntityVersion> latest = stampCalc.latest((EntityFacade) entity);
-
-//        TinkarTerm.IDENTIFIER_PATTERN
-//        TinkarTerm.IDENTIFIER_SOURCE
-//        TinkarTerm.STATEMENT_IDENTIFIER
-//        TinkarTerm.UNIVERSALLY_UNIQUE_IDENTIFIER
-//        TinkarTerm.IDENTIFIER_VALUE
 
         return latest.isPresent();
     }
