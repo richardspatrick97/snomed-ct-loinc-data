@@ -36,7 +36,7 @@ public class SnomedLoincIdentifierSemanticIT extends SnomedLoincAbstractIntegrat
      * @result Reads content from file and validates Identifier of Semantics by calling protected method assertLine().
      */
     @Test
-    public void testIdentifierSemantics() throws IOException {git 
+    public void testIdentifierSemantics() throws IOException {
         String sourceFilePath = "../snomed-ct-loinc-origin/target/origin-sources";
         String errorFile = "target/failsafe-reports/identifiers_not_found.txt";
 
